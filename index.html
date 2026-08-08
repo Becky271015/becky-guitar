@@ -4,261 +4,534 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Becky Guitar | Aprende guitarra</title>
+    <title>Acorde a Requinto | Aprende guitarra con Becky</title>
 
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap');
+
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
         }
 
-        body {
-            font-family: Arial, sans-serif;
-            background: #fffaf7;
-            color: #241b22;
+        :root {
+            --cream: #fffaf7;
+            --white: #ffffff;
+            --brown: #65483d;
+            --brown-dark: #302522;
+            --purple: #82628d;
+            --purple-light: #eee4f1;
+            --pink: #f2dce6;
+            --navy: #17243a;
+            --gray: #6d6668;
+            --border: #eadfdb;
         }
+
+        body {
+            font-family: "DM Sans", Arial, sans-serif;
+            background: var(--cream);
+            color: var(--brown-dark);
+        }
+
+        /* ---------- NAVBAR ---------- */
 
         header {
+            height: 78px;
+            padding: 0 7%;
             display: flex;
-            justify-content: space-between;
             align-items: center;
-            padding: 20px 7%;
-            background: #ffffff;
-            border-bottom: 1px solid #eee4e0;
+            justify-content: space-between;
+            background: rgba(255,255,255,0.94);
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 0;
+            z-index: 10;
         }
 
-        .logo {
-            font-size: 25px;
-            font-weight: bold;
-            color: #5b3b63;
+        .brand {
+            text-decoration: none;
+            color: var(--brown-dark);
+            display: flex;
+            flex-direction: column;
+            line-height: 1;
+        }
+
+        .brand-name {
+            font-family: "Playfair Display", serif;
+            font-size: 23px;
+            color: var(--purple);
+        }
+
+        .brand-subtitle {
+            font-size: 9px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--brown);
+            margin-top: 5px;
+        }
+
+        nav {
+            display: flex;
+            align-items: center;
+            gap: 28px;
         }
 
         nav a {
-            margin-left: 25px;
             text-decoration: none;
-            color: #332832;
+            color: var(--brown-dark);
+            font-size: 14px;
             font-weight: 600;
         }
 
-        .login {
-            background: #5b3b63;
-            color: white;
-            padding: 10px 18px;
-            border-radius: 20px;
+        nav a:hover {
+            color: var(--purple);
         }
+
+        .login-button {
+            background: var(--navy);
+            color: white !important;
+            padding: 11px 19px;
+            border-radius: 22px;
+        }
+
+        /* ---------- HERO ---------- */
 
         .hero {
-            min-height: 600px;
-            display: flex;
+            min-height: 650px;
+            padding: 85px 8%;
+            display: grid;
+            grid-template-columns: 1.1fr 0.9fr;
             align-items: center;
-            justify-content: space-between;
-            gap: 50px;
-            padding: 70px 8%;
-            background: linear-gradient(135deg, #fff8f5, #f4edf7);
+            gap: 40px;
+            overflow: hidden;
+            background:
+                radial-gradient(circle at 80% 20%, #f2dce6 0, transparent 28%),
+                radial-gradient(circle at 15% 85%, #eee4f1 0, transparent 30%),
+                var(--cream);
         }
 
-        .hero-text {
-            max-width: 600px;
-        }
-
-        .small-title {
-            color: #76517f;
-            font-weight: bold;
-            margin-bottom: 15px;
-            font-size: 17px;
-        }
-
-        h1 {
-            font-size: 58px;
-            line-height: 1.05;
+        .eyebrow {
+            color: var(--purple);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-size: 13px;
+            font-weight: 700;
             margin-bottom: 20px;
         }
 
+        h1 {
+            font-family: "Playfair Display", serif;
+            font-size: clamp(48px, 6vw, 78px);
+            line-height: 0.98;
+            max-width: 700px;
+            color: var(--brown-dark);
+        }
+
         h1 span {
-            color: #6c4675;
+            color: var(--purple);
         }
 
-        .description {
-            font-size: 20px;
-            line-height: 1.6;
-            color: #5c5058;
-            margin-bottom: 30px;
+        .hero-description {
+            margin-top: 25px;
+            max-width: 590px;
+            color: var(--gray);
+            font-size: 18px;
+            line-height: 1.65;
         }
 
-        .search {
-            display: flex;
+        /* ---------- SEARCH ---------- */
+
+        .search-box {
+            margin-top: 32px;
+            max-width: 650px;
             background: white;
-            padding: 8px;
-            border-radius: 35px;
-            box-shadow: 0 8px 25px rgba(60, 35, 60, 0.12);
-            max-width: 560px;
+            border: 1px solid var(--border);
+            border-radius: 18px;
+            padding: 7px;
+            display: flex;
+            box-shadow: 0 12px 35px rgba(48, 37, 34, 0.08);
         }
 
-        .search input {
+        .search-box input {
             flex: 1;
             border: none;
             outline: none;
-            padding: 15px 20px;
+            background: transparent;
+            padding: 15px 18px;
+            font-family: inherit;
             font-size: 16px;
-            border-radius: 30px;
+            color: var(--brown-dark);
         }
 
-        .search button {
+        .search-box button {
             border: none;
-            background: #5b3b63;
+            background: var(--purple);
             color: white;
-            padding: 15px 25px;
-            border-radius: 30px;
-            font-size: 15px;
-            font-weight: bold;
+            border-radius: 13px;
+            padding: 0 25px;
+            font-family: inherit;
+            font-weight: 700;
             cursor: pointer;
         }
 
-        .buttons {
-            margin-top: 25px;
+        .search-box button:hover {
+            background: var(--navy);
         }
 
-        .main-button {
+        .hero-buttons {
+            margin-top: 20px;
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .primary-button,
+        .secondary-button {
             display: inline-block;
-            background: #5b3b63;
+            text-decoration: none;
+            padding: 14px 21px;
+            border-radius: 25px;
+            font-weight: 700;
+            font-size: 14px;
+        }
+
+        .primary-button {
+            background: var(--navy);
             color: white;
-            padding: 14px 24px;
-            border-radius: 25px;
-            text-decoration: none;
-            font-weight: bold;
-            margin-right: 10px;
         }
 
-        .second-button {
-            display: inline-block;
+        .secondary-button {
             background: white;
-            color: #5b3b63;
-            padding: 14px 24px;
-            border-radius: 25px;
-            text-decoration: none;
-            font-weight: bold;
-            border: 1px solid #d8c9dc;
+            color: var(--brown);
+            border: 1px solid var(--border);
         }
 
-        .becky-placeholder {
-            width: 330px;
-            height: 400px;
-            border-radius: 40px;
-            background: #eadcf0;
+        /* ---------- BECKY PLACEHOLDER ---------- */
+
+        .becky-area {
+            min-height: 470px;
             display: flex;
             align-items: center;
             justify-content: center;
+            position: relative;
+        }
+
+        .becky-card {
+            width: 360px;
+            height: 440px;
+            background: linear-gradient(145deg, #f4e8f5, #f7e3e9);
+            border-radius: 42% 42% 35% 35%;
+            border: 1px solid #e4d2e7;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
             text-align: center;
-            box-shadow: 0 15px 35px rgba(60, 35, 60, 0.15);
-            font-size: 80px;
+            box-shadow: 0 25px 60px rgba(70, 48, 65, 0.13);
+            transform: rotate(2deg);
         }
 
-        .becky-placeholder p {
-            font-size: 18px;
-            margin-top: 15px;
-        }
-
-        .features {
-            padding: 70px 8%;
+        .becky-circle {
+            width: 155px;
+            height: 155px;
+            border-radius: 50%;
             background: white;
-            text-align: center;
+            border: 5px solid #d9c3dd;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0;
         }
 
-        .features h2 {
-            font-size: 36px;
-            margin-bottom: 15px;
+        .becky-circle::after {
+            content: "BECKY";
+            font-family: "Playfair Display", serif;
+            font-size: 19px;
+            color: var(--purple);
+            letter-spacing: 1px;
         }
 
-        .features-subtitle {
-            color: #6b6068;
-            margin-bottom: 40px;
+        .becky-card h2 {
+            font-family: "Playfair Display", serif;
+            font-size: 30px;
+            margin-top: 25px;
+            color: var(--brown-dark);
         }
 
-        .cards {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 25px;
-        }
-
-        .card {
-            padding: 30px;
-            border-radius: 25px;
-            background: #fffaf7;
-            border: 1px solid #eee2df;
-            text-align: left;
-        }
-
-        .card-icon {
-            font-size: 35px;
-            margin-bottom: 15px;
-        }
-
-        .card h3 {
-            margin-bottom: 10px;
-        }
-
-        .card p {
-            color: #6b6068;
+        .becky-card p {
+            color: var(--gray);
+            margin-top: 8px;
+            max-width: 250px;
             line-height: 1.5;
+            font-size: 14px;
         }
 
-        .mexico {
-            padding: 80px 8%;
-            background: #f4edf7;
-            text-align: center;
+        /* ---------- FEATURES ---------- */
+
+        .section {
+            padding: 90px 8%;
         }
 
-        .mexico h2 {
-            font-size: 38px;
-            margin-bottom: 15px;
+        .section-heading {
+            max-width: 700px;
+            margin-bottom: 42px;
         }
 
-        .mexico p {
-            max-width: 650px;
-            margin: 0 auto 25px;
-            color: #635862;
+        .section-heading .label {
+            color: var(--purple);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .section-heading h2 {
+            font-family: "Playfair Display", serif;
+            font-size: 42px;
+            margin-top: 10px;
+        }
+
+        .section-heading p {
+            color: var(--gray);
+            margin-top: 12px;
             line-height: 1.6;
         }
 
-        footer {
-            padding: 30px;
-            text-align: center;
-            background: #241b22;
-            color: white;
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
         }
 
-        @media (max-width: 800px) {
+        .feature-card {
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 25px;
+            padding: 30px;
+            min-height: 230px;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(48, 37, 34, 0.08);
+        }
+
+        .number {
+            font-family: "Playfair Display", serif;
+            font-size: 28px;
+            color: var(--pink);
+        }
+
+        .feature-card h3 {
+            font-size: 20px;
+            margin-top: 18px;
+        }
+
+        .feature-card p {
+            margin-top: 10px;
+            color: var(--gray);
+            line-height: 1.55;
+        }
+
+        .feature-link {
+            display: inline-block;
+            margin-top: 18px;
+            color: var(--purple);
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 14px;
+        }
+
+        /* ---------- REQUESTS ---------- */
+
+        .requests {
+            background: var(--navy);
+            color: white;
+            padding: 90px 8%;
+        }
+
+        .requests-inner {
+            max-width: 1100px;
+            margin: auto;
+            display: grid;
+            grid-template-columns: 1fr 0.8fr;
+            gap: 60px;
+            align-items: center;
+        }
+
+        .requests h2 {
+            font-family: "Playfair Display", serif;
+            font-size: 44px;
+        }
+
+        .requests p {
+            color: #d8dce5;
+            line-height: 1.65;
+            margin-top: 16px;
+            max-width: 570px;
+        }
+
+        .request-button {
+            display: inline-block;
+            margin-top: 25px;
+            background: #f2dce6;
+            color: var(--navy);
+            text-decoration: none;
+            padding: 14px 22px;
+            border-radius: 25px;
+            font-weight: 700;
+        }
+
+        .vote-box {
+            background: rgba(255,255,255,0.08);
+            border: 1px solid rgba(255,255,255,0.14);
+            border-radius: 28px;
+            padding: 28px;
+        }
+
+        .vote-box h3 {
+            font-size: 17px;
+            margin-bottom: 18px;
+        }
+
+        .vote-row {
+            background: rgba(255,255,255,0.08);
+            padding: 15px;
+            border-radius: 14px;
+            margin-top: 10px;
+            display: flex;
+            justify-content: space-between;
+            gap: 15px;
+        }
+
+        .vote-row span {
+            color: #e6e8ed;
+            font-size: 14px;
+        }
+
+        .vote-number {
+            color: #f2dce6 !important;
+            font-weight: 700;
+        }
+
+        /* ---------- MEXICO ---------- */
+
+        .mexico {
+            padding: 100px 8%;
+            text-align: center;
+            background: #f8f0f3;
+        }
+
+        .mexico h2 {
+            font-family: "Playfair Display", serif;
+            font-size: 46px;
+        }
+
+        .mexico p {
+            max-width: 700px;
+            margin: 18px auto 30px;
+            color: var(--gray);
+            line-height: 1.65;
+        }
+
+        .map-placeholder {
+            max-width: 900px;
+            height: 230px;
+            margin: auto;
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--purple);
+            font-family: "Playfair Display", serif;
+            font-size: 25px;
+        }
+
+        /* ---------- FOOTER ---------- */
+
+        footer {
+            background: var(--brown-dark);
+            color: white;
+            padding: 50px 8%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 30px;
+        }
+
+        footer h3 {
+            font-family: "Playfair Display", serif;
+            font-size: 25px;
+        }
+
+        footer p {
+            color: #cfc5c1;
+            margin-top: 8px;
+            font-size: 14px;
+        }
+
+        /* ---------- MOBILE ---------- */
+
+        @media (max-width: 850px) {
 
             header {
-                flex-direction: column;
+                height: auto;
+                padding: 18px 6%;
                 gap: 15px;
+                flex-wrap: wrap;
+            }
+
+            nav {
+                width: 100%;
+                justify-content: center;
+                gap: 14px;
+                flex-wrap: wrap;
             }
 
             nav a {
-                margin: 0 7px;
+                font-size: 12px;
             }
 
             .hero {
-                flex-direction: column;
+                grid-template-columns: 1fr;
                 text-align: center;
+                padding: 65px 6%;
             }
 
-            h1 {
-                font-size: 42px;
+            .hero-description {
+                margin-left: auto;
+                margin-right: auto;
             }
 
-            .search {
-                margin: auto;
+            .search-box {
+                margin-left: auto;
+                margin-right: auto;
             }
 
-            .cards {
+            .hero-buttons {
+                justify-content: center;
+            }
+
+            .becky-card {
+                width: 290px;
+                height: 370px;
+            }
+
+            .feature-grid {
                 grid-template-columns: 1fr;
             }
 
-            .becky-placeholder {
-                width: 280px;
-                height: 330px;
+            .requests-inner {
+                grid-template-columns: 1fr;
+            }
+
+            footer {
+                flex-direction: column;
+                text-align: center;
             }
         }
     </style>
@@ -268,171 +541,333 @@
 
 <header>
 
-    <div class="logo">
-        🎸 Becky Guitar
-    </div>
+    <a href="#" class="brand">
+        <span class="brand-name">Acorde a Requinto</span>
+        <span class="brand-subtitle">Aprende guitarra con Becky</span>
+    </a>
 
     <nav>
         <a href="#canciones">Canciones</a>
         <a href="#aprender">Aprender</a>
         <a href="#viaje">Viaje</a>
-        <a href="#" class="login">Iniciar sesión</a>
+        <a href="#">Iniciar sesión</a>
     </nav>
 
 </header>
 
 
-<section class="hero">
+<main>
 
-    <div class="hero-text">
+    <section class="hero">
 
-        <div class="small-title">
-            🐶 La chihuahua norteña que te enseña a tocar
+        <div>
+
+            <div class="eyebrow">
+                Aprende guitarra a tu manera
+            </div>
+
+            <h1>
+                Tu guitarra.
+                <span>Tu música.</span>
+                Tu camino.
+            </h1>
+
+            <p class="hero-description">
+                Aprende guitarra acústica paso a paso con Becky,
+                descubre canciones, practica a tu ritmo y recorre
+                México mientras mejoras.
+            </p>
+
+
+            <div class="search-box">
+
+                <input
+                    type="text"
+                    placeholder="¿Qué canción quieres aprender?"
+                >
+
+                <button>
+                    Buscar
+                </button>
+
+            </div>
+
+
+            <div class="hero-buttons">
+
+                <a href="#aprender" class="primary-button">
+                    Empezar a aprender
+                </a>
+
+                <a href="#viaje" class="secondary-button">
+                    Explorar México
+                </a>
+
+            </div>
+
         </div>
 
-        <h1>
-            Aprende guitarra<br>
-            <span>paso a paso con Becky.</span>
-        </h1>
 
-        <p class="description">
-            Aprende guitarra acústica desde cero, encuentra tus canciones
-            favoritas y acompaña a Becky en una aventura por México.
+        <div class="becky-area">
+
+            <div class="becky-card">
+
+                <div class="becky-circle"></div>
+
+                <h2>Becky</h2>
+
+                <p>
+                    La chihuahua norteña que te enseña a tocar.
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <section class="section" id="canciones">
+
+        <div class="section-heading">
+
+            <div class="label">
+                Empieza por donde quieras
+            </div>
+
+            <h2>
+                La guitarra se aprende tocando.
+            </h2>
+
+            <p>
+                No importa si estás empezando desde cero o ya sabes
+                algunos acordes. Aquí tú decides qué quieres aprender.
+            </p>
+
+        </div>
+
+
+        <div class="feature-grid">
+
+            <article class="feature-card">
+
+                <div class="number">01</div>
+
+                <h3>
+                    Busca una canción
+                </h3>
+
+                <p>
+                    Encuentra la canción que quieres aprender
+                    y descubre qué necesitas para tocarla.
+                </p>
+
+                <a href="#" class="feature-link">
+                    Explorar canciones →
+                </a>
+
+            </article>
+
+
+            <article class="feature-card">
+
+                <div class="number">02</div>
+
+                <h3>
+                    Aprende desde cero
+                </h3>
+
+                <p>
+                    Haz un pequeño examen para descubrir tu nivel
+                    y desbloquea lecciones a tu propio ritmo.
+                </p>
+
+                <a href="#aprender" class="feature-link">
+                    Conocer mi nivel →
+                </a>
+
+            </article>
+
+
+            <article class="feature-card">
+
+                <div class="number">03</div>
+
+                <h3>
+                    Gana experiencia
+                </h3>
+
+                <p>
+                    Completa canciones y lecciones, gana XP,
+                    consigue logros y sigue avanzando.
+                </p>
+
+                <a href="#" class="feature-link">
+                    Ver progreso →
+                </a>
+
+            </article>
+
+        </div>
+
+    </section>
+
+
+    <section class="requests">
+
+        <div class="requests-inner">
+
+            <div>
+
+                <h2>
+                    ¿No encuentras tu canción?
+                </h2>
+
+                <p>
+                    Pídela. La comunidad puede votar por sus canciones
+                    favoritas y Becky puede prepararlas para la academia.
+                </p>
+
+                <a href="#" class="request-button">
+                    Solicitar una canción
+                </a>
+
+            </div>
+
+
+            <div class="vote-box">
+
+                <h3>
+                    Canciones más solicitadas
+                </h3>
+
+                <div class="vote-row">
+                    <span>Tu canción favorita</span>
+                    <span class="vote-number">— votos</span>
+                </div>
+
+                <div class="vote-row">
+                    <span>Otra canción</span>
+                    <span class="vote-number">— votos</span>
+                </div>
+
+                <div class="vote-row">
+                    <span>Próximamente</span>
+                    <span class="vote-number">—</span>
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <section class="mexico" id="viaje">
+
+        <h2>
+            Empieza tu viaje por México.
+        </h2>
+
+        <p>
+            Tu aventura comienza en Chihuahua. Recorre sus municipios,
+            ciudades, pueblos y lugares turísticos mientras desbloqueas
+            nuevas experiencias de guitarra.
         </p>
 
-        <div class="search">
-
-            <input
-                type="text"
-                placeholder="¿Qué canción quieres aprender?"
-            >
-
-            <button>
-                Buscar
-            </button>
-
+        <div class="map-placeholder">
+            Chihuahua · Próximamente
         </div>
 
-        <div class="buttons">
-
-            <a href="#aprender" class="main-button">
-                🎸 Quiero aprender
-            </a>
-
-            <a href="#viaje" class="second-button">
-                🗺️ Explorar México
-            </a>
-
-        </div>
-
-    </div>
+    </section>
 
 
-    <div class="becky-placeholder">
+    <section class="section" id="aprender">
 
-        🐶
+        <div class="section-heading">
 
-    </div>
-
-</section>
-
-
-<section class="features" id="canciones">
-
-    <h2>
-        Aprende como tú quieras
-    </h2>
-
-    <p class="features-subtitle">
-        Tú eliges la canción, Becky te acompaña.
-    </p>
-
-
-    <div class="cards">
-
-        <div class="card">
-
-            <div class="card-icon">
-                🔎
+            <div class="label">
+                Academia
             </div>
 
-            <h3>
-                Busca una canción
-            </h3>
+            <h2>
+                Aprende a tu propio ritmo.
+            </h2>
 
             <p>
-                Encuentra la canción que quieres aprender
-                y comienza a practicar a tu ritmo.
+                Desde tu primer acorde hasta tocar canciones completas.
+                Becky te acompaña durante todo el camino.
             </p>
 
         </div>
 
 
-        <div class="card">
+        <div class="feature-grid">
 
-            <div class="card-icon">
-                🗳️
-            </div>
+            <article class="feature-card">
 
-            <h3>
-                Solicita y vota
-            </h3>
+                <div class="number">A</div>
 
-            <p>
-                ¿No encontramos tu canción?
-                Solicítala y deja que la comunidad vote por ella.
-            </p>
+                <h3>
+                    Examen de nivel
+                </h3>
+
+                <p>
+                    Cuéntanos lo que ya sabes y descubre desde dónde
+                    deberías comenzar.
+                </p>
+
+            </article>
+
+
+            <article class="feature-card">
+
+                <div class="number">B</div>
+
+                <h3>
+                    Lecciones
+                </h3>
+
+                <p>
+                    Aprende acordes, rasgueos, cambios, requintos
+                    y mucho más.
+                </p>
+
+            </article>
+
+
+            <article class="feature-card">
+
+                <div class="number">C</div>
+
+                <h3>
+                    Desbloquea tu camino
+                </h3>
+
+                <p>
+                    Completa tus objetivos, consigue XP y abre
+                    nuevas lecciones y canciones.
+                </p>
+
+            </article>
 
         </div>
 
+    </section>
 
-        <div class="card">
-
-            <div class="card-icon">
-                🎓
-            </div>
-
-            <h3>
-                Aprende desde cero
-            </h3>
-
-            <p>
-                Haz tu examen de nivel, gana experiencia,
-                desbloquea lecciones y mejora paso a paso.
-            </p>
-
-        </div>
-
-    </div>
-
-</section>
-
-
-<section class="mexico" id="viaje">
-
-    <h2>
-        🗺️ Viaja por México con Becky
-    </h2>
-
-    <p>
-        Comienza tu aventura en Chihuahua y recorre municipios,
-        ciudades, pueblos y lugares increíbles mientras aprendes guitarra.
-    </p>
-
-    <a href="#" class="main-button">
-        Próximamente
-    </a>
-
-</section>
+</main>
 
 
 <footer>
 
-    🐶🎸 Becky Guitar
+    <div>
+        <h3>Acorde a Requinto</h3>
+        <p>Aprende guitarra paso a paso con Becky.</p>
+    </div>
 
-    <br><br>
-
-    Aprende guitarra paso a paso con Becky.
+    <div>
+        La chihuahua norteña que te enseña a tocar.
+    </div>
 
 </footer>
 
