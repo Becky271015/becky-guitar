@@ -581,17 +581,20 @@
 
             <div class="search-box">
 
-                <input
-                    type="text"
-                    placeholder="¿Qué canción quieres aprender?"
-                >
+    <input
+        type="text"
+        id="songSearch"
+        placeholder="¿Qué canción quieres aprender?"
+        autocomplete="off"
+    >
 
-                <button>
-                    Buscar
-                </button>
+    <button onclick="searchSong()">
+        Buscar
+    </button>
 
-            </div>
+</div>
 
+<div id="searchResults"></div>
 
             <div class="hero-buttons">
 
@@ -871,5 +874,121 @@
 
 </footer>
 
-</body>
+</body> 
+    <script>
+
+const songs = [
+    {
+        title: "San Lucas",
+        artist: "Kevin Kaarl",
+        level: "Intermedio"
+    },
+    {
+        title: "Colapso",
+        artist: "Kevin Kaarl",
+        level: "Intermedio"
+    },
+    {
+        title: "Gracias A Ti",
+        artist: "DannyLux",
+        level: "Principiante"
+    },
+    {
+        title: "Rinconcito En El Cielo",
+        artist: "Ramón Ayala y Sus Bravos del Norte",
+        level: "Principiante"
+    },
+    {
+        title: "La Vida Ruina",
+        artist: "Ariel Camacho y Los Plebes Del Rancho",
+        level: "Intermedio"
+    }
+];
+
+
+function searchSong() {
+
+    const search = document
+        .getElementById("songSearch")
+        .value
+        .toLowerCase()
+        .trim();
+
+    const results = document.getElementById("searchResults");
+
+    if (search === "") {
+
+        results.innerHTML = "";
+
+        return;
+    }
+
+    const matches = songs.filter(song =>
+        song.title.toLowerCase().includes(search) ||
+        song.artist.toLowerCase().includes(search)
+    );
+
+
+    if (matches.length === 0) {
+
+        results.innerHTML = `
+            <div class="no-results">
+                <h3>No encontramos esa canción.</h3>
+                <p>
+                    ¿Quieres pedirle una canción a Becky?
+                </p>
+
+                <button onclick="requestSong()">
+                    Solicitar canción
+                </button>
+            </div>
+        `;
+
+        return;
+    }
+
+
+    results.innerHTML = matches.map(song => `
+
+        <div class="song-result">
+
+            <div>
+                <h3>${song.title}</h3>
+
+                <p>${song.artist}</p>
+
+                <span>${song.level}</span>
+            </div>
+
+            <button onclick="openSong('${song.title}')">
+                Ver canción
+            </button>
+
+        </div>
+
+    `).join("");
+
+}
+
+
+function openSong(title) {
+
+    alert(
+        "Próximamente podrás aprender " +
+        title +
+        " con Becky."
+    );
+
+}
+
+
+function requestSong() {
+
+    alert(
+        "Aquí aparecerá el formulario para solicitar una canción."
+    );
+
+}
+
+</script>
 </html>
