@@ -539,6 +539,8 @@ Solicitar canción
             }
         }
     </style>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 
 <body>
@@ -595,6 +597,9 @@ Solicitar canción
     <button onclick="searchSong()">
         Buscar
     </button>
+               </div>
+
+<div id="searchResults"></div> 
 
 </div>
 
@@ -881,6 +886,17 @@ Solicitar canción
 </body> 
     <script>
 
+<script>
+
+const SUPABASE_URL = "TU_API_URL";
+const SUPABASE_KEY = "TU_PUBLISHABLE_KEY";
+
+const supabaseClient = supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
+);
+
+
 const songs = [
     {
         title: "San Lucas",
@@ -920,12 +936,14 @@ function searchSong() {
 
     const results = document.getElementById("searchResults");
 
+
     if (search === "") {
 
         results.innerHTML = "";
 
         return;
     }
+
 
     const matches = songs.filter(song =>
         song.title.toLowerCase().includes(search) ||
@@ -937,7 +955,9 @@ function searchSong() {
 
         results.innerHTML = `
             <div class="no-results">
+
                 <h3>No encontramos esa canción.</h3>
+
                 <p>
                     ¿Quieres pedirle una canción a Becky?
                 </p>
@@ -945,6 +965,7 @@ function searchSong() {
                 <button onclick="requestSong()">
                     Solicitar canción
                 </button>
+
             </div>
         `;
 
@@ -957,11 +978,13 @@ function searchSong() {
         <div class="song-result">
 
             <div>
+
                 <h3>${song.title}</h3>
 
                 <p>${song.artist}</p>
 
                 <span>${song.level}</span>
+
             </div>
 
             <button onclick="openSong('${song.title}')">
@@ -971,8 +994,8 @@ function searchSong() {
         </div>
 
     `).join("");
-
 }
+
 
 
 function openSong(title) {
@@ -986,13 +1009,20 @@ function openSong(title) {
 }
 
 
-async function requestSong() {
 
-    const results = document.getElementById("searchResults");
+function requestSong() {
+
+    const results =
+        document.getElementById("searchResults");
+
 
     results.innerHTML = `
+
         <div class="no-results">
-            <h3>¿Qué canción quieres aprender?</h3>
+
+            <h3>
+                ¿Qué canción quieres aprender?
+            </h3>
 
             <input
                 type="text"
@@ -1014,25 +1044,12 @@ async function requestSong() {
             <button onclick="sendRequest()">
                 Enviar solicitud
             </button>
+
         </div>
+
     `;
 }
-    
 
-    alert(
-        "Aquí aparecerá el formulario para solicitar una canción."
-    );
-
-}
-
-</script> 
-    const SUPABASE_URL = "https://ixpjcwwuxttmuzupobna.supabase.co/rest/v1/";
-const SUPABASE_KEY = "sb_publishable_rxfYGWCguYH6_NLWRQ21RQ_h6vmNSN8";
-
-const supabaseClient = supabase.createClient(
-    SUPABASE_URL,
-    SUPABASE_KEY
-);
 
 
 async function sendRequest() {
@@ -1042,10 +1059,12 @@ async function sendRequest() {
         .value
         .trim();
 
+
     const artist = document
         .getElementById("requestArtist")
         .value
         .trim();
+
 
     const message = document
         .getElementById("requestMessage")
@@ -1055,7 +1074,9 @@ async function sendRequest() {
 
     if (!title || !artist) {
 
-        alert("Escribe el nombre de la canción y el artista.");
+        alert(
+            "Escribe el nombre de la canción y el artista."
+        );
 
         return;
     }
@@ -1074,20 +1095,33 @@ async function sendRequest() {
 
         console.error(error);
 
-        alert("No pudimos enviar la solicitud. Inténtalo otra vez.");
+        alert(
+            "No pudimos enviar la solicitud. Inténtalo otra vez."
+        );
 
         return;
     }
 
 
     document.getElementById("searchResults").innerHTML = `
+
         <div class="no-results">
-            <h3>¡Solicitud enviada! 🎸</h3>
+
+            <h3>
+                ¡Solicitud enviada! 🎸
+            </h3>
 
             <p>
                 Becky ya recibió tu petición.
             </p>
+
         </div>
+
     `;
+
 }
+
+</script>
+
+</body>
 </html>
