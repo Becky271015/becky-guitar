@@ -869,7 +869,6 @@ Solicitar canción
 
 </main>
 
-
 <footer>
 
     <div>
@@ -883,19 +882,6 @@ Solicitar canción
 
 </footer>
 
-</body> 
-    <script>
-
-<script>
-
-const SUPABASE_URL = "https://ixpjcwwuxttmuzupobna.supabase.co/rest/v1/";
-const SUPABASE_KEY = "sb_publishable_rxfYGWCguYH6_NLWRQ21RQ_h6vmNSN8";
-
-const supabaseClient = supabase.createClient(
-    SUPABASE_URL,
-    SUPABASE_KEY
-);
-        
 <script>
 
 const songs = [
@@ -926,7 +912,6 @@ const songs = [
     }
 ];
 
-
 function searchSong() {
 
     const search = document
@@ -937,24 +922,66 @@ function searchSong() {
 
     const results = document.getElementById("searchResults");
 
-
     if (search === "") {
-
         results.innerHTML = "";
-
         return;
     }
-
 
     const matches = songs.filter(song =>
         song.title.toLowerCase().includes(search) ||
         song.artist.toLowerCase().includes(search)
     );
 
-
     if (matches.length === 0) {
 
         results.innerHTML = `
+            <div class="no-results">
+                <h3>No encontramos esa canción.</h3>
+
+                <p>
+                    ¿Quieres pedirle una canción a Becky?
+                </p>
+
+                <button onclick="requestSong()">
+                    Solicitar canción
+                </button>
+            </div>
+        `;
+
+        return;
+    }
+
+    results.innerHTML = matches.map(song => `
+        <div class="song-result">
+
+            <div>
+                <h3>${song.title}</h3>
+                <p>${song.artist}</p>
+                <span>${song.level}</span>
+            </div>
+
+            <button onclick="openSong('${song.title}')">
+                Ver canción
+            </button>
+
+        </div>
+    `).join("");
+}
+
+function openSong(title) {
+
+    alert(
+        "Próximamente podrás aprender " +
+        title +
+        " con Becky."
+    );
+
+}
+
+</script>
+
+        </footer>
+    
             <div class="no-results">
 
                 <h3>No encontramos esa canción.</h3>
