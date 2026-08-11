@@ -846,50 +846,22 @@
         </div>
 
 
-        <div class="vote-box">
+       <div class="vote-box">
 
-            <h3>
-                Canciones más solicitadas
-            </h3>
+    <h3>
+        Canciones más solicitadas
+    </h3>
 
-            <div class="vote-row">
+    <div id="requestedSongs">
 
-                <span>
-                    Tu canción favorita
-                </span>
+        <div class="vote-row">
+            <span>Cargando solicitudes...</span>
+            <span class="vote-number">🎸</span>
+        </div>
 
-                <span class="vote-number">
-                    — votos
-                </span>
+    </div>
 
-            </div>
-
-
-            <div class="vote-row">
-
-                <span>
-                    Otra canción
-                </span>
-
-                <span class="vote-number">
-                    — votos
-                </span>
-
-            </div>
-
-
-            <div class="vote-row">
-
-                <span>
-                    Próximamente
-                </span>
-
-                <span class="vote-number">
-                    —
-                </span>
-
-            </div>
-
+</div>
         </div>
 
 
@@ -1191,6 +1163,59 @@ function searchSong() {
 /* =========================
    ABRIR CANCIÓN
 ========================= */
+
+function openSong(title) {
+
+    async function loadRequestedSongs() {
+
+    const requestedSongs = document.getElementById("requestedSongs");
+
+    const { data, error } = await supabaseClient
+        .from("song_requests")
+        .select("song_title, artist")
+        .order("created_at", { ascending: false })
+        .limit(5);
+
+    if (error) {
+        console.error(error);
+
+        requestedSongs.innerHTML = `
+            <div class="vote-row">
+                <span>No pudimos cargar las solicitudes.</span>
+                <span class="vote-number">—</span>
+            </div>
+        `;
+
+        return;
+    }
+
+    if (!data || data.length === 0) {
+
+        requestedSongs.innerHTML = `
+            <div class="vote-row">
+                <span>Aún no hay canciones solicitadas.</span>
+                <span class="vote-number">🎸</span>
+            </div>
+        `;
+
+        return;
+    }
+
+    requestedSongs.innerHTML = data.map(song => `
+        <div class="vote-row">
+            <span>
+                ${song.song_title} — ${song.artist}
+            </span>
+            <span class="vote-number">
+                🎸
+            </span>
+        </div>
+    `).join("");
+}
+
+
+loadRequestedSongs();
+
 
 function openSong(title) {
 
