@@ -1068,46 +1068,30 @@ const songs = [
 
 function searchSong() {
 
-
     const search = document
         .getElementById("songSearch")
         .value
         .toLowerCase()
         .trim();
 
-
-    const results =
-        document.getElementById("searchResults");
-
+    const results = document.getElementById("searchResults");
 
     if (search === "") {
-
         results.innerHTML = "";
-
         return;
-
     }
 
-
     const matches = songs.filter(song =>
-
         song.title.toLowerCase().includes(search) ||
-
         song.artist.toLowerCase().includes(search)
-
     );
-
 
     if (matches.length === 0) {
 
-
         results.innerHTML = `
-
             <div class="no-results">
 
-                <h3>
-                    No encontramos esa canción.
-                </h3>
+                <h3>No encontramos esa canción.</h3>
 
                 <p>
                     ¿Quieres pedirle una canción a Becky?
@@ -1118,55 +1102,27 @@ function searchSong() {
                 </button>
 
             </div>
-
         `;
 
-
         return;
-
     }
 
-
     results.innerHTML = matches.map(song => `
-
         <div class="song-result">
 
             <div>
-
-                <h3>
-                    ${song.title}
-                </h3>
-
-                <p>
-                    ${song.artist}
-                </p>
-
-                <span>
-                    ${song.level}
-                </span>
-
+                <h3>${song.title}</h3>
+                <p>${song.artist}</p>
+                <span>${song.level}</span>
             </div>
-
 
             <button onclick="openSong('${song.title}')">
                 Ver canción
             </button>
 
         </div>
-
     `).join("");
-
 }
-
-
-
-/* =========================
-   ABRIR CANCIÓN
-========================= */
-
-function openSong(title) {
-
-    async function loadRequestedSongs() {
 
     const requestedSongs = document.getElementById("requestedSongs");
 
