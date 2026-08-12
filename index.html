@@ -2,16 +2,13 @@
 <html lang="es">
 
 <head>
-
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>Acorde a Requinto | Aprende guitarra con Becky</title>
 
-    <!-- SUPABASE -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-    <!-- FUENTES -->
     <style>
 
         @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap');
@@ -33,12 +30,28 @@
             --navy: #17243a;
             --gray: #6d6668;
             --border: #eadfdb;
+            --green: #718b75;
+            --gold: #c59b4d;
+        }
+
+        html {
+            scroll-behavior: smooth;
         }
 
         body {
             font-family: "DM Sans", Arial, sans-serif;
             background: var(--cream);
             color: var(--brown-dark);
+        }
+
+        button,
+        input,
+        textarea {
+            font-family: inherit;
+        }
+
+        button {
+            cursor: pointer;
         }
 
 
@@ -49,19 +62,23 @@
         header {
             height: 78px;
             padding: 0 7%;
+
             display: flex;
             align-items: center;
             justify-content: space-between;
-            background: rgba(255,255,255,0.94);
+
+            background: rgba(255, 255, 255, 0.96);
             border-bottom: 1px solid var(--border);
+
             position: sticky;
             top: 0;
-            z-index: 10;
+            z-index: 100;
         }
 
         .brand {
             text-decoration: none;
             color: var(--brown-dark);
+
             display: flex;
             flex-direction: column;
             line-height: 1;
@@ -84,18 +101,27 @@
         nav {
             display: flex;
             align-items: center;
-            gap: 28px;
+            gap: 26px;
         }
 
         nav a {
-            text-decoration: none;
             color: var(--brown-dark);
+            text-decoration: none;
             font-size: 14px;
             font-weight: 600;
         }
 
         nav a:hover {
             color: var(--purple);
+        }
+
+        .nav-profile {
+            border: none;
+            background: var(--navy);
+            color: white;
+            padding: 10px 16px;
+            border-radius: 20px;
+            font-weight: 700;
         }
 
 
@@ -105,26 +131,24 @@
 
         .hero {
             min-height: 650px;
-            padding: 85px 8%;
+            padding: 80px 8%;
+
             display: grid;
             grid-template-columns: 1.1fr 0.9fr;
             align-items: center;
-            gap: 40px;
-            overflow: hidden;
+            gap: 50px;
 
             background:
                 radial-gradient(
-                    circle at 80% 20%,
+                    circle at 82% 18%,
                     #f2dce6 0,
                     transparent 28%
                 ),
-
                 radial-gradient(
-                    circle at 15% 85%,
+                    circle at 12% 85%,
                     #eee4f1 0,
                     transparent 30%
                 ),
-
                 var(--cream);
         }
 
@@ -142,7 +166,6 @@
             font-size: clamp(48px, 6vw, 78px);
             line-height: 0.98;
             max-width: 700px;
-            color: var(--brown-dark);
         }
 
         h1 span {
@@ -159,17 +182,21 @@
 
 
         /* =========================
-           BUSCADOR
+           SEARCH
         ========================= */
 
         .search-box {
             margin-top: 32px;
             max-width: 650px;
+
             background: white;
             border: 1px solid var(--border);
             border-radius: 18px;
+
             padding: 7px;
+
             display: flex;
+
             box-shadow: 0 12px 35px rgba(48, 37, 34, 0.08);
         }
 
@@ -178,87 +205,61 @@
             border: none;
             outline: none;
             background: transparent;
+
             padding: 15px 18px;
-            font-family: inherit;
+
             font-size: 16px;
-            color: var(--brown-dark);
         }
 
         .search-box button {
             border: none;
             background: var(--purple);
             color: white;
+
             border-radius: 13px;
             padding: 0 25px;
-            font-family: inherit;
+
             font-weight: 700;
-            cursor: pointer;
         }
 
         .search-box button:hover {
             background: var(--navy);
         }
 
-
-        /* =========================
-           RESULTADOS
-        ========================= */
-
         #searchResults {
             max-width: 650px;
             margin-top: 15px;
         }
 
+        .song-result,
         .no-results {
             background: white;
             border: 1px solid var(--border);
             border-radius: 18px;
-            padding: 22px;
-        }
-
-        .no-results h3 {
-            font-size: 20px;
-        }
-
-        .no-results p {
-            margin-top: 8px;
-            color: var(--gray);
-            line-height: 1.5;
-        }
-
-        .no-results button {
-            margin-top: 15px;
-            border: none;
-            background: var(--purple);
-            color: white;
-            padding: 12px 18px;
-            border-radius: 20px;
-            font-weight: 700;
-            cursor: pointer;
+            padding: 20px;
+            margin-bottom: 10px;
         }
 
         .song-result {
-            background: white;
-            border: 1px solid var(--border);
-            border-radius: 18px;
-            padding: 18px;
             display: flex;
             justify-content: space-between;
             align-items: center;
             gap: 15px;
-            margin-bottom: 10px;
         }
 
-        .song-result h3 {
-            font-size: 20px;
+        .song-result h3,
+        .no-results h3 {
+            font-size: 19px;
         }
 
-        .song-result p {
+        .song-result p,
+        .no-results p {
+            margin-top: 6px;
             color: var(--gray);
-            margin-top: 4px;
+            line-height: 1.5;
         }
 
-        .song-result span {
+        .song-level {
             display: inline-block;
             margin-top: 8px;
             color: var(--purple);
@@ -266,47 +267,19 @@
             font-weight: 700;
         }
 
-        .song-result button {
+        .song-result button,
+        .no-results button {
             border: none;
             background: var(--navy);
             color: white;
-            padding: 11px 15px;
+            padding: 11px 16px;
             border-radius: 18px;
             font-weight: 700;
-            cursor: pointer;
         }
 
-
-        /* =========================
-           BOTONES HERO
-        ========================= */
-
-        .hero-buttons {
-            margin-top: 20px;
-            display: flex;
-            gap: 12px;
-            flex-wrap: wrap;
-        }
-
-        .primary-button,
-        .secondary-button {
-            display: inline-block;
-            text-decoration: none;
-            padding: 14px 21px;
-            border-radius: 25px;
-            font-weight: 700;
-            font-size: 14px;
-        }
-
-        .primary-button {
-            background: var(--navy);
-            color: white;
-        }
-
-        .secondary-button {
-            background: white;
-            color: var(--brown);
-            border: 1px solid var(--border);
+        .no-results button {
+            margin-top: 15px;
+            background: var(--purple);
         }
 
 
@@ -316,16 +289,22 @@
 
         .becky-area {
             min-height: 470px;
+
             display: flex;
             align-items: center;
             justify-content: center;
-            position: relative;
         }
 
         .becky-card {
             width: 360px;
             height: 440px;
-            background: linear-gradient(145deg, #f4e8f5, #f7e3e9);
+
+            background: linear-gradient(
+                145deg,
+                #f4e8f5,
+                #f7e3e9
+            );
+
             border-radius: 42% 42% 35% 35%;
             border: 1px solid #e4d2e7;
 
@@ -333,9 +312,11 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
+
             text-align: center;
 
-            box-shadow: 0 25px 60px rgba(70, 48, 65, 0.13);
+            box-shadow:
+                0 25px 60px rgba(70, 48, 65, 0.13);
 
             transform: rotate(2deg);
         }
@@ -343,21 +324,23 @@
         .becky-circle {
             width: 155px;
             height: 155px;
+
             border-radius: 50%;
+
             background: white;
             border: 5px solid #d9c3dd;
 
             display: flex;
             align-items: center;
             justify-content: center;
-
-            font-size: 0;
         }
 
         .becky-circle::after {
             content: "BECKY";
+
             font-family: "Playfair Display", serif;
             font-size: 19px;
+
             color: var(--purple);
             letter-spacing: 1px;
         }
@@ -378,7 +361,7 @@
 
 
         /* =========================
-           SECCIONES
+           GENERAL SECTIONS
         ========================= */
 
         .section {
@@ -390,7 +373,7 @@
             margin-bottom: 42px;
         }
 
-        .section-heading .label {
+        .label {
             color: var(--purple);
             text-transform: uppercase;
             letter-spacing: 2px;
@@ -421,11 +404,9 @@
             border: 1px solid var(--border);
             border-radius: 25px;
             padding: 30px;
-            min-height: 230px;
+            min-height: 240px;
 
-            transition:
-                transform 0.2s ease,
-                box-shadow 0.2s ease;
+            transition: 0.2s ease;
         }
 
         .feature-card:hover {
@@ -461,7 +442,315 @@
 
 
         /* =========================
-           SOLICITUDES
+           PLAYER PROGRESS
+        ========================= */
+
+        .progress-section {
+            background: white;
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .progress-panel {
+            max-width: 1100px;
+            margin: auto;
+
+            display: grid;
+            grid-template-columns: 0.7fr 1fr 0.7fr;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .progress-box {
+            background: var(--cream);
+            border: 1px solid var(--border);
+            border-radius: 22px;
+            padding: 22px;
+        }
+
+        .progress-box small {
+            color: var(--gray);
+            font-weight: 600;
+        }
+
+        .progress-box strong {
+            display: block;
+            font-family: "Playfair Display", serif;
+            font-size: 28px;
+            margin-top: 5px;
+        }
+
+        .xp-bar {
+            height: 10px;
+            background: #eadfe9;
+            border-radius: 20px;
+            margin-top: 12px;
+            overflow: hidden;
+        }
+
+        .xp-fill {
+            height: 100%;
+            width: 35%;
+            background: var(--purple);
+            border-radius: 20px;
+        }
+
+
+        /* =========================
+           MAP
+        ========================= */
+
+        .map-section {
+            padding: 100px 8%;
+
+            background:
+                linear-gradient(
+                    180deg,
+                    #f8f0f3,
+                    #fffaf7
+                );
+        }
+
+        .map-wrapper {
+            max-width: 1150px;
+            margin: auto;
+        }
+
+        .map-intro {
+            max-width: 700px;
+            margin-bottom: 40px;
+        }
+
+        .map-intro h2 {
+            font-family: "Playfair Display", serif;
+            font-size: 46px;
+        }
+
+        .map-intro p {
+            color: var(--gray);
+            margin-top: 14px;
+            line-height: 1.65;
+        }
+
+        .adventure-map {
+            min-height: 540px;
+
+            position: relative;
+
+            overflow: hidden;
+
+            border-radius: 35px;
+
+            border: 1px solid var(--border);
+
+            background:
+                radial-gradient(
+                    circle at 20% 25%,
+                    #eee4f1 0,
+                    transparent 22%
+                ),
+                radial-gradient(
+                    circle at 75% 65%,
+                    #f2dce6 0,
+                    transparent 25%
+                ),
+                #fffdfb;
+
+            box-shadow:
+                0 20px 50px rgba(48, 37, 34, 0.08);
+        }
+
+        .map-title {
+            position: absolute;
+            top: 25px;
+            left: 30px;
+
+            background: white;
+            border: 1px solid var(--border);
+
+            border-radius: 15px;
+
+            padding: 12px 18px;
+
+            font-weight: 700;
+        }
+
+        .map-road {
+            position: absolute;
+
+            height: 8px;
+
+            background: #d7c7bd;
+
+            border-radius: 20px;
+
+            transform-origin: left center;
+        }
+
+        .road-one {
+            width: 42%;
+            left: 18%;
+            top: 48%;
+            transform: rotate(18deg);
+        }
+
+        .road-two {
+            width: 38%;
+            left: 46%;
+            top: 61%;
+            transform: rotate(-15deg);
+        }
+
+        .road-three {
+            width: 35%;
+            left: 28%;
+            top: 70%;
+            transform: rotate(-8deg);
+        }
+
+        .map-node {
+            position: absolute;
+
+            width: 82px;
+            height: 82px;
+
+            border-radius: 50%;
+
+            background: white;
+
+            border: 4px solid var(--purple);
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            text-align: center;
+
+            font-size: 11px;
+            font-weight: 700;
+
+            padding: 8px;
+
+            box-shadow:
+                0 8px 25px rgba(48, 37, 34, 0.12);
+
+            z-index: 2;
+        }
+
+        .map-node small {
+            display: block;
+            color: var(--gray);
+            font-size: 9px;
+            margin-top: 3px;
+        }
+
+        .node-start {
+            left: 12%;
+            top: 35%;
+        }
+
+        .node-lesson {
+            left: 39%;
+            top: 47%;
+        }
+
+        .node-tourism {
+            left: 65%;
+            top: 35%;
+            border-color: var(--gold);
+        }
+
+        .node-locked {
+            left: 73%;
+            top: 65%;
+            border-color: #c9c3c0;
+            color: #aaa4a1;
+        }
+
+        .node-final {
+            left: 30%;
+            top: 75%;
+            border-color: var(--green);
+        }
+
+        .map-legend {
+            position: absolute;
+
+            bottom: 22px;
+            right: 25px;
+
+            background: white;
+            border: 1px solid var(--border);
+
+            border-radius: 18px;
+
+            padding: 15px;
+
+            font-size: 12px;
+
+            display: flex;
+            flex-direction: column;
+            gap: 7px;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .legend-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--purple);
+        }
+
+        .legend-dot.gold {
+            background: var(--gold);
+        }
+
+        .legend-dot.gray {
+            background: #c9c3c0;
+        }
+
+        .legend-dot.green {
+            background: var(--green);
+        }
+
+
+        /* =========================
+           ACADEMIA
+        ========================= */
+
+        .academy-card {
+            position: relative;
+        }
+
+        .locked {
+            opacity: 0.6;
+        }
+
+        .lesson-status {
+            margin-top: 15px;
+
+            display: inline-block;
+
+            padding: 7px 12px;
+
+            border-radius: 15px;
+
+            background: var(--purple-light);
+
+            color: var(--purple);
+
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+
+        /* =========================
+           REQUESTS
         ========================= */
 
         .requests {
@@ -496,19 +785,26 @@
         .request-button {
             display: inline-block;
             margin-top: 25px;
+
             background: #f2dce6;
             color: var(--navy);
+
             text-decoration: none;
+
             padding: 14px 22px;
+
             border-radius: 25px;
+
             font-weight: 700;
-            cursor: pointer;
         }
 
         .vote-box {
             background: rgba(255,255,255,0.08);
+
             border: 1px solid rgba(255,255,255,0.14);
+
             border-radius: 28px;
+
             padding: 28px;
         }
 
@@ -519,12 +815,16 @@
 
         .vote-row {
             background: rgba(255,255,255,0.08);
+
             padding: 15px;
+
             border-radius: 14px;
+
             margin-top: 10px;
 
             display: flex;
             justify-content: space-between;
+
             gap: 15px;
         }
 
@@ -540,54 +840,13 @@
 
 
         /* =========================
-           MEXICO
-        ========================= */
-
-        .mexico {
-            padding: 100px 8%;
-            text-align: center;
-            background: #f8f0f3;
-        }
-
-        .mexico h2 {
-            font-family: "Playfair Display", serif;
-            font-size: 46px;
-        }
-
-        .mexico p {
-            max-width: 700px;
-            margin: 18px auto 30px;
-            color: var(--gray);
-            line-height: 1.65;
-        }
-
-        .map-placeholder {
-            max-width: 900px;
-            height: 230px;
-            margin: auto;
-
-            background: white;
-            border: 1px solid var(--border);
-            border-radius: 30px;
-
-            display: flex;
-            align-items: center;
-            justify-content: center;
-
-            color: var(--purple);
-
-            font-family: "Playfair Display", serif;
-            font-size: 25px;
-        }
-
-
-        /* =========================
            FOOTER
         ========================= */
 
         footer {
             background: var(--brown-dark);
             color: white;
+
             padding: 50px 8%;
 
             display: flex;
@@ -655,10 +914,6 @@
                 text-align: left;
             }
 
-            .hero-buttons {
-                justify-content: center;
-            }
-
             .becky-card {
                 width: 290px;
                 height: 370px;
@@ -668,13 +923,79 @@
                 grid-template-columns: 1fr;
             }
 
+            .progress-panel {
+                grid-template-columns: 1fr;
+            }
+
             .requests-inner {
                 grid-template-columns: 1fr;
+            }
+
+            .song-result {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .song-result button {
+                width: 100%;
+            }
+
+            .adventure-map {
+                min-height: 620px;
+            }
+
+            .map-node {
+                width: 70px;
+                height: 70px;
+                font-size: 9px;
+            }
+
+            .node-start {
+                left: 7%;
+                top: 28%;
+            }
+
+            .node-lesson {
+                left: 38%;
+                top: 43%;
+            }
+
+            .node-tourism {
+                left: 67%;
+                top: 28%;
+            }
+
+            .node-locked {
+                left: 70%;
+                top: 65%;
+            }
+
+            .node-final {
+                left: 25%;
+                top: 76%;
             }
 
             footer {
                 flex-direction: column;
                 text-align: center;
+            }
+        }
+
+        @media (max-width: 500px) {
+
+            .search-box {
+                flex-direction: column;
+                padding: 8px;
+            }
+
+            .search-box button {
+                height: 45px;
+            }
+
+            .map-legend {
+                left: 20px;
+                right: 20px;
+                bottom: 15px;
             }
         }
 
@@ -686,327 +1007,662 @@
 <body>
 
 
-<header>
-
-    <a href="#" class="brand">
-
-        <span class="brand-name">
-            Acorde a Requinto
-        </span>
-
-        <span class="brand-subtitle">
-            Aprende guitarra con Becky
-        </span>
-
-    </a>
-
-
-    <nav>
-
-        <a href="#canciones">
-            Canciones
-        </a>
-
-        <a href="#aprender">
-            Aprender
-        </a>
-
-        <a href="#viaje">
-            Viaje
-        </a>
-
-        <a href="#">
-            Iniciar sesión
-        </a>
-
-    </nav>
-
-</header>
-
-
-<main>
-
-
     <!-- =========================
-         HERO
+         NAVBAR
     ========================= -->
 
-    <section class="hero">
+    <header>
 
+        <a href="#" class="brand">
 
-        <div>
+            <span class="brand-name">
+                Acorde a Requinto
+            </span>
 
-            <div class="eyebrow">
-                Aprende guitarra a tu manera
-            </div>
+            <span class="brand-subtitle">
+                Aprende guitarra con Becky
+            </span>
 
+        </a>
 
-            <h1>
+        <nav>
 
-                Tu guitarra.
+            <a href="#canciones">
+                Canciones
+            </a>
 
-                <span>
-                    Tu música.
-                </span>
+            <a href="#academia">
+                Academia
+            </a>
 
-                Tu camino.
+            <a href="#viaje">
+                Viaje
+            </a>
 
-            </h1>
+            <button
+                class="nav-profile"
+                onclick="openProfile()"
+            >
+                Mi progreso
+            </button>
 
+        </nav>
 
-            <p class="hero-description">
+    </header>
 
-                Aprende guitarra acústica paso a paso con Becky,
-                descubre canciones, practica a tu ritmo y recorre
-                México mientras mejoras.
 
-            </p>
 
+    <main>
 
-            <!-- BUSCADOR -->
 
-            <div class="search-box">
+        <!-- =========================
+             HERO
+        ========================= -->
 
-                <input
-                    type="text"
-                    id="songSearch"
-                    placeholder="¿Qué canción quieres aprender?"
-                    autocomplete="off"
-                >
-
-                <button onclick="searchSong()">
-                    Buscar
-                </button>
-
-            </div>
-
-
-            <!-- RESULTADOS -->
-
-            <div id="searchResults"></div>
-
-
-            <div class="hero-buttons">
-
-                <a
-                    href="#aprender"
-                    class="primary-button"
-                >
-                    Empezar a aprender
-                </a>
-
-
-                <a
-                    href="#viaje"
-                    class="secondary-button"
-                >
-                    Explorar México
-                </a>
-
-            </div>
-
-        </div>
-
-
-        <!-- BECKY -->
-
-        <div class="becky-area">
-
-            <div class="becky-card">
-
-                <div class="becky-circle"></div>
-
-                <h2>
-                    Becky
-                </h2>
-
-                <p>
-                    La chihuahua norteña que te enseña a tocar.
-                </p>
-
-            </div>
-
-        </div>
-
-
-    </section>
-
-
-
-    <!-- =========================
-         CANCIONES
-    ========================= -->
-
-    <section
-        class="section"
-        id="canciones"
-    >
-
-        <div class="section-heading">
-
-            <div class="label">
-                Empieza por donde quieras
-            </div>
-
-            <h2>
-                La guitarra se aprende tocando.
-            </h2>
-
-            <p>
-
-                No importa si estás empezando desde cero o ya sabes
-                algunos acordes. Aquí tú decides qué quieres aprender.
-
-            </p>
-
-        </div>
-
-
-        <div class="feature-grid">
-
-
-            <article class="feature-card">
-
-                <div class="number">
-                    01
-                </div>
-
-                <h3>
-                    Busca una canción
-                </h3>
-
-                <p>
-
-                    Encuentra la canción que quieres aprender
-                    y descubre qué necesitas para tocarla.
-
-                </p>
-
-                <a
-                    href="#"
-                    class="feature-link"
-                >
-                    Explorar canciones →
-                </a>
-
-            </article>
-
-
-            <article class="feature-card">
-
-                <div class="number">
-                    02
-                </div>
-
-                <h3>
-                    Aprende desde cero
-                </h3>
-
-                <p>
-
-                    Haz un pequeño examen para descubrir tu nivel
-                    y desbloquea lecciones a tu propio ritmo.
-
-                </p>
-
-                <a
-                    href="#aprender"
-                    class="feature-link"
-                >
-                    Conocer mi nivel →
-                </a>
-
-            </article>
-
-
-            <article class="feature-card">
-
-                <div class="number">
-                    03
-                </div>
-
-                <h3>
-                    Gana experiencia
-                </h3>
-
-                <p>
-
-                    Completa canciones y lecciones, gana XP,
-                    consigue logros y sigue avanzando.
-
-                </p>
-
-                <a
-                    href="#"
-                    class="feature-link"
-                >
-                    Ver progreso →
-                </a>
-
-            </article>
-
-
-        </div>
-
-    </section>
-
-
-
-    <!-- =========================
-         SOLICITUDES
-    ========================= -->
-
-    <section class="requests">
-
-
-        <div class="requests-inner">
-
+        <section class="hero">
 
             <div>
 
-                <h2>
-                    ¿No encuentras tu canción?
-                </h2>
+                <div class="eyebrow">
+                    Aprende guitarra a tu manera
+                </div>
 
+                <h1>
+                    Tu guitarra.
+                    <span>Tu música.</span>
+                    Tu camino.
+                </h1>
 
-                <p>
+                <p class="hero-description">
 
-                    Pídela. La comunidad puede votar por sus canciones
-                    favoritas y Becky puede prepararlas para la academia.
+                    Aprende guitarra acústica paso a paso con Becky,
+                    descubre canciones, completa lecciones, gana
+                    experiencia y recorre México mientras mejoras.
 
                 </p>
 
 
-                <a
-                    href="#"
-                    class="request-button"
-                    onclick="requestSong(); return false;"
-                >
-                    Solicitar una canción
-                </a>
+                <!-- BUSCADOR -->
+
+                <div class="search-box">
+
+                    <input
+                        type="text"
+                        id="songSearch"
+                        placeholder="¿Qué canción quieres aprender?"
+                        autocomplete="off"
+                    >
+
+                    <button
+                        type="button"
+                        onclick="searchSong()"
+                    >
+                        Buscar
+                    </button>
+
+                </div>
+
+
+                <div id="searchResults"></div>
+
+
+                <div class="hero-buttons">
+
+                    <a
+                        href="#academia"
+                        class="primary-button"
+                    >
+                        Empezar a aprender
+                    </a>
+
+                    <a
+                        href="#viaje"
+                        class="secondary-button"
+                    >
+                        Explorar México
+                    </a>
+
+                </div>
 
             </div>
 
 
+            <!-- BECKY -->
 
-            <div class="vote-box">
+            <div class="becky-area">
 
-                <h3>
-                    Canciones más solicitadas
-                </h3>
+                <div class="becky-card">
+
+                    <div class="becky-circle"></div>
+
+                    <h2>
+                        Becky
+                    </h2>
+
+                    <p>
+                        La chihuahua norteña que te acompaña
+                        durante tu aventura de guitarra.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
 
 
-                <div id="requestedSongs">
 
-                    <div class="vote-row">
+        <!-- =========================
+             PROGRESO
+        ========================= -->
 
-                        <span>
-                            Cargando solicitudes...
+        <section class="section progress-section">
+
+            <div class="progress-panel">
+
+
+                <div class="progress-box">
+
+                    <small>
+                        NIVEL
+                    </small>
+
+                    <strong id="playerLevel">
+                        1
+                    </strong>
+
+                </div>
+
+
+                <div class="progress-box">
+
+                    <small>
+                        EXPERIENCIA
+                    </small>
+
+                    <strong>
+                        <span id="playerXP">
+                            120
                         </span>
+                        XP
+                    </strong>
 
-                        <span class="vote-number">
-                            🎸
-                        </span>
+                    <div class="xp-bar">
+
+                        <div
+                            class="xp-fill"
+                            id="xpFill"
+                        ></div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="progress-box">
+
+                    <small>
+                        DESTINO
+                    </small>
+
+                    <strong>
+                        Chihuahua
+                    </strong>
+
+                </div>
+
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =========================
+             CANCIONES
+        ========================= -->
+
+        <section
+            class="section"
+            id="canciones"
+        >
+
+            <div class="section-heading">
+
+                <div class="label">
+                    Canciones
+                </div>
+
+                <h2>
+                    La guitarra se aprende tocando.
+                </h2>
+
+                <p>
+                    Busca una canción, aprende lo que necesitas
+                    y agrégala a tu progreso.
+                </p>
+
+            </div>
+
+
+            <div class="feature-grid">
+
+
+                <article class="feature-card">
+
+                    <div class="number">
+                        01
+                    </div>
+
+                    <h3>
+                        Busca una canción
+                    </h3>
+
+                    <p>
+                        Encuentra canciones por nombre o artista.
+                    </p>
+
+                    <a
+                        href="#"
+                        class="feature-link"
+                        onclick="focusSearch(); return false;"
+                    >
+                        Buscar canción →
+                    </a>
+
+                </article>
+
+
+                <article class="feature-card">
+
+                    <div class="number">
+                        02
+                    </div>
+
+                    <h3>
+                        Aprende
+                    </h3>
+
+                    <p>
+                        Mira los acordes, rasgueos y requintos
+                        necesarios para tocarla.
+                    </p>
+
+                    <a
+                        href="#academia"
+                        class="feature-link"
+                    >
+                        Ir a la academia →
+                    </a>
+
+                </article>
+
+
+                <article class="feature-card">
+
+                    <div class="number">
+                        03
+                    </div>
+
+                    <h3>
+                        Completa
+                    </h3>
+
+                    <p>
+                        Marca la canción como aprendida y recibe
+                        experiencia para continuar tu viaje.
+                    </p>
+
+                    <a
+                        href="#viaje"
+                        class="feature-link"
+                    >
+                        Ver mi aventura →
+                    </a>
+
+                </article>
+
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =========================
+             MAPA / AVENTURA
+        ========================= -->
+
+        <section
+            class="map-section"
+            id="viaje"
+        >
+
+            <div class="map-wrapper">
+
+
+                <div class="map-intro">
+
+                    <div class="label">
+                        Tu aventura
+                    </div>
+
+                    <h2>
+                        Tu viaje comienza en México.
+                    </h2>
+
+                    <p>
+
+                        Aprende, gana experiencia y desbloquea
+                        nuevos lugares. Cada destino tiene algo
+                        nuevo que descubrir.
+
+                    </p>
+
+                </div>
+
+
+                <div class="adventure-map">
+
+
+                    <div class="map-title">
+                        🗺️ Chihuahua
+                    </div>
+
+
+                    <!-- CAMINOS -->
+
+                    <div class="map-road road-one"></div>
+
+                    <div class="map-road road-two"></div>
+
+                    <div class="map-road road-three"></div>
+
+
+                    <!-- NODOS -->
+
+
+                    <button
+                        class="map-node node-start"
+                        onclick="openMapNode('start')"
+                    >
+
+                        Inicio
+
+                        <small>
+                            Tu viaje
+                        </small>
+
+                    </button>
+
+
+                    <button
+                        class="map-node node-lesson"
+                        onclick="openMapNode('lesson')"
+                    >
+
+                        Lección 1
+
+                        <small>
+                            +100 XP
+                        </small>
+
+                    </button>
+
+
+                    <button
+                        class="map-node node-tourism"
+                        onclick="openMapNode('tourism')"
+                    >
+
+                        Descubierto
+
+                        <small>
+                            Lugar especial
+                        </small>
+
+                    </button>
+
+
+                    <button
+                        class="map-node node-locked"
+                        onclick="openMapNode('locked')"
+                    >
+
+                        🔒
+
+                        <small>
+                            Bloqueado
+                        </small>
+
+                    </button>
+
+
+                    <button
+                        class="map-node node-final"
+                        onclick="openMapNode('final')"
+                    >
+
+                        Reto
+
+                        <small>
+                            Próximo
+                        </small>
+
+                    </button>
+
+
+                    <!-- LEYENDA -->
+
+                    <div class="map-legend">
+
+                        <div class="legend-item">
+
+                            <span class="legend-dot"></span>
+
+                            Lección
+
+                        </div>
+
+                        <div class="legend-item">
+
+                            <span class="legend-dot gold"></span>
+
+                            Descubrimiento
+
+                        </div>
+
+                        <div class="legend-item">
+
+                            <span class="legend-dot green"></span>
+
+                            Reto
+
+                        </div>
+
+                        <div class="legend-item">
+
+                            <span class="legend-dot gray"></span>
+
+                            Bloqueado
+
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =========================
+             ACADEMIA
+        ========================= -->
+
+        <section
+            class="section"
+            id="academia"
+        >
+
+            <div class="section-heading">
+
+                <div class="label">
+                    Academia
+                </div>
+
+                <h2>
+                    Aprende a tu propio ritmo.
+                </h2>
+
+                <p>
+
+                    Tu progreso en guitarra también mueve tu aventura.
+                    Cada lección puede abrir nuevos caminos.
+
+                </p>
+
+            </div>
+
+
+            <div class="feature-grid">
+
+
+                <article class="feature-card academy-card">
+
+                    <div class="number">
+                        01
+                    </div>
+
+                    <h3>
+                        Descubre tu nivel
+                    </h3>
+
+                    <p>
+
+                        Responde algunas preguntas para saber
+                        desde dónde comenzar.
+
+                    </p>
+
+                    <span class="lesson-status">
+                        Próximamente
+                    </span>
+
+                </article>
+
+
+                <article class="feature-card academy-card">
+
+                    <div class="number">
+                        02
+                    </div>
+
+                    <h3>
+                        Aprende acordes
+                    </h3>
+
+                    <p>
+
+                        Aprende posiciones, cambios de acordes
+                        y ejercicios prácticos.
+
+                    </p>
+
+                    <span class="lesson-status">
+                        Lección 1 disponible
+                    </span>
+
+                </article>
+
+
+                <article class="feature-card academy-card locked">
+
+                    <div class="number">
+                        03
+                    </div>
+
+                    <h3>
+                        Requinto
+                    </h3>
+
+                    <p>
+
+                        Aprende melodías y requintos de tus
+                        canciones favoritas.
+
+                    </p>
+
+                    <span class="lesson-status">
+                        🔒 Desbloquea después
+                    </span>
+
+                </article>
+
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =========================
+             SOLICITAR CANCIONES
+        ========================= -->
+
+        <section class="requests">
+
+
+            <div class="requests-inner">
+
+
+                <div>
+
+                    <h2>
+                        ¿No encuentras tu canción?
+                    </h2>
+
+                    <p>
+
+                        Solicítala y ayúdanos a decidir qué canciones
+                        preparar para la academia.
+
+                    </p>
+
+
+                    <a
+                        href="#"
+                        class="request-button"
+                        onclick="requestSong(); return false;"
+                    >
+                        Solicitar una canción
+                    </a>
+
+                </div>
+
+
+                <div class="vote-box">
+
+                    <h3>
+                        Canciones más solicitadas
+                    </h3>
+
+                    <div id="requestedSongs">
+
+                        <div class="vote-row">
+
+                            <span>
+                                Cargando...
+                            </span>
+
+                            <span class="vote-number">
+                                🎸
+                            </span>
+
+                        </div>
 
                     </div>
 
@@ -1015,646 +1671,951 @@
 
             </div>
 
-
-        </div>
-
-
-    </section>
+        </section>
 
 
 
-    <!-- =========================
-         MEXICO
-    ========================= -->
-
-    <section
-        class="mexico"
-        id="viaje"
-    >
-
-        <h2>
-            Empieza tu viaje por México.
-        </h2>
-
-
-        <p>
-
-            Tu aventura comienza en Chihuahua. Recorre sus municipios,
-            ciudades, pueblos y lugares turísticos mientras desbloqueas
-            nuevas experiencias de guitarra.
-
-        </p>
-
-
-        <div class="map-placeholder">
-
-            Chihuahua · Próximamente
-
-        </div>
-
-
-    </section>
+    </main>
 
 
 
     <!-- =========================
-         ACADEMIA
+         FOOTER
     ========================= -->
 
-    <section
-        class="section"
-        id="aprender"
-    >
+    <footer>
 
-        <div class="section-heading">
+        <div>
 
-            <div class="label">
-                Academia
-            </div>
-
-
-            <h2>
-                Aprende a tu propio ritmo.
-            </h2>
-
+            <h3>
+                Acorde a Requinto
+            </h3>
 
             <p>
-
-                Desde tu primer acorde hasta tocar canciones completas.
-                Becky te acompaña durante todo el camino.
-
+                Aprende guitarra paso a paso con Becky.
             </p>
 
         </div>
 
-
-        <div class="feature-grid">
-
-
-            <article class="feature-card">
-
-                <div class="number">
-                    A
-                </div>
-
-                <h3>
-                    Examen de nivel
-                </h3>
-
-                <p>
-
-                    Cuéntanos lo que ya sabes y descubre desde dónde
-                    deberías comenzar.
-
-                </p>
-
-            </article>
-
-
-            <article class="feature-card">
-
-                <div class="number">
-                    B
-                </div>
-
-                <h3>
-                    Lecciones
-                </h3>
-
-                <p>
-
-                    Aprende acordes, rasgueos, cambios, requintos
-                    y mucho más.
-
-                </p>
-
-            </article>
-
-
-            <article class="feature-card">
-
-                <div class="number">
-                    C
-                </div>
-
-                <h3>
-                    Desbloquea tu camino
-                </h3>
-
-                <p>
-
-                    Completa tus objetivos, consigue XP y abre
-                    nuevas lecciones y canciones.
-
-                </p>
-
-            </article>
-
-
+        <div>
+            La chihuahua norteña que te acompaña.
         </div>
 
-    </section>
+    </footer>
 
 
-</main>
 
+    <!-- =========================
+         JAVASCRIPT
+    ========================= -->
 
+    <script>
 
-<!-- =========================
-     FOOTER
-========================= -->
 
-<footer>
+        /* =========================
+           SUPABASE
+        ========================= */
 
-    <div>
+        const SUPABASE_URL =
+            "PEGA_AQUI_TU_API_URL";
 
-        <h3>
-            Acorde a Requinto
-        </h3>
+        const SUPABASE_KEY =
+            "PEGA_AQUI_TU_PUBLISHABLE_KEY";
 
-        <p>
-            Aprende guitarra paso a paso con Becky.
-        </p>
 
-    </div>
+        let supabaseClient = null;
 
 
-    <div>
-        La chihuahua norteña que te enseña a tocar.
-    </div>
+        if (
+            SUPABASE_URL !== "PEGA_AQUI_TU_API_URL" &&
+            SUPABASE_KEY !== "PEGA_AQUI_TU_PUBLISHABLE_KEY"
+        ) {
 
-</footer>
+            supabaseClient =
+                supabase.createClient(
+                    SUPABASE_URL,
+                    SUPABASE_KEY
+                );
 
+        }
 
 
-<!-- =========================
-     JAVASCRIPT
-========================= -->
 
-<script>
+        /* =========================
+           DATOS DEL JUGADOR
+        ========================= */
 
+        let player = {
 
-/* =========================
-   SUPABASE
-========================= */
+            level: 1,
 
-/*
-   PEGA AQUÍ TU API URL Y TU PUBLISHABLE KEY
-*/
+            xp: 120,
 
-const SUPABASE_URL = "PEGA_AQUI_TU_API_URL";
+            xpNeeded: 500,
 
-const SUPABASE_KEY = "PEGA_AQUI_TU_PUBLISHABLE_KEY";
+            completedLessons: [],
 
+            completedSongs: [],
 
-const supabaseClient = supabase.createClient(
-    SUPABASE_URL,
-    SUPABASE_KEY
-);
+            discoveredPlaces: []
 
+        };
 
 
-/* =========================
-   CANCIONES
-========================= */
+        /* =========================
+           CARGAR PROGRESO
+        ========================= */
 
-const songs = [
+        function loadProgress() {
 
-    {
-        title: "San Lucas",
-        artist: "Kevin Kaarl",
-        level: "Intermedio"
-    },
+            const saved =
+                localStorage.getItem(
+                    "acordeARequintoPlayer"
+                );
 
-    {
-        title: "Colapso",
-        artist: "Kevin Kaarl",
-        level: "Intermedio"
-    },
 
-    {
-        title: "Gracias A Ti",
-        artist: "DannyLux",
-        level: "Principiante"
-    },
+            if (saved) {
 
-    {
-        title: "Rinconcito En El Cielo",
-        artist: "Ramón Ayala y Sus Bravos del Norte",
-        level: "Principiante"
-    },
+                try {
 
-    {
-        title: "La Vida Ruina",
-        artist: "Ariel Camacho y Los Plebes Del Rancho",
-        level: "Intermedio"
-    }
+                    player =
+                        JSON.parse(saved);
 
-];
+                } catch {
 
+                    console.log(
+                        "No se pudo cargar el progreso."
+                    );
 
+                }
 
-/* =========================
-   BUSCAR CANCIÓN
-========================= */
+            }
 
-function searchSong() {
 
+            updateProgress();
 
-    const search = document
-        .getElementById("songSearch")
-        .value
-        .toLowerCase()
-        .trim();
+        }
 
 
-    const results =
-        document.getElementById("searchResults");
 
+        /* =========================
+           GUARDAR PROGRESO
+        ========================= */
 
-    if (search === "") {
+        function saveProgress() {
 
-        results.innerHTML = "";
+            localStorage.setItem(
+                "acordeARequintoPlayer",
+                JSON.stringify(player)
+            );
 
-        return;
+        }
 
-    }
 
 
-    const matches = songs.filter(song =>
+        /* =========================
+           ACTUALIZAR PROGRESO
+        ========================= */
 
-        song.title
-            .toLowerCase()
-            .includes(search)
+        function updateProgress() {
 
-        ||
+            document.getElementById(
+                "playerLevel"
+            ).textContent =
+                player.level;
 
-        song.artist
-            .toLowerCase()
-            .includes(search)
 
-    );
+            document.getElementById(
+                "playerXP"
+            ).textContent =
+                player.xp;
 
 
-    if (matches.length === 0) {
+            const percentage =
+                Math.min(
+                    (player.xp / player.xpNeeded) * 100,
+                    100
+                );
 
 
-        results.innerHTML = `
+            document.getElementById(
+                "xpFill"
+            ).style.width =
+                percentage + "%";
 
-            <div class="no-results">
+        }
 
-                <h3>
-                    No encontramos esa canción.
-                </h3>
 
-                <p>
-                    ¿Quieres pedirle una canción a Becky?
-                </p>
 
-                <button onclick="requestSong()">
-                    Solicitar canción
-                </button>
+        /* =========================
+           GANAR XP
+        ========================= */
 
-            </div>
+        function addXP(amount) {
 
-        `;
+            player.xp += amount;
 
 
-        return;
+            while (
+                player.xp >= player.xpNeeded
+            ) {
 
-    }
+                player.xp -=
+                    player.xpNeeded;
 
+                player.level++;
 
-    results.innerHTML = matches.map(song => `
+                player.xpNeeded += 250;
 
-        <div class="song-result">
 
-            <div>
+                alert(
+                    "¡Subiste al nivel " +
+                    player.level +
+                    "! 🎸"
+                );
 
-                <h3>
-                    ${song.title}
-                </h3>
+            }
 
-                <p>
-                    ${song.artist}
-                </p>
 
-                <span>
-                    ${song.level}
-                </span>
+            saveProgress();
 
-            </div>
+            updateProgress();
 
+        }
 
-            <button
-                onclick="openSong('${song.title}')"
-            >
-                Ver canción
-            </button>
 
-        </div>
 
-    `).join("");
+        /* =========================
+           CANCIONES
+        ========================= */
 
-}
+        const songs = [
 
+            {
+                title: "San Lucas",
+                artist: "Kevin Kaarl",
+                level: "Intermedio"
+            },
 
+            {
+                title: "Colapso",
+                artist: "Kevin Kaarl",
+                level: "Intermedio"
+            },
 
-/* =========================
-   ABRIR CANCIÓN
-========================= */
+            {
+                title: "Gracias A Ti",
+                artist: "DannyLux",
+                level: "Principiante"
+            },
 
-function openSong(title) {
+            {
+                title: "Rinconcito En El Cielo",
+                artist: "Ramón Ayala y Sus Bravos del Norte",
+                level: "Principiante"
+            },
 
-    alert(
-        "Próximamente podrás aprender " +
-        title +
-        " con Becky."
-    );
+            {
+                title: "La Vida Ruina",
+                artist: "Ariel Camacho y Los Plebes Del Rancho",
+                level: "Intermedio"
+            }
 
-}
+        ];
 
 
 
-/* =========================
-   SOLICITAR CANCIÓN
-========================= */
+        /* =========================
+           NORMALIZAR TEXTO
+        ========================= */
 
-function requestSong() {
+        function normalizeText(text) {
 
+            return text
+                .toLowerCase()
+                .normalize("NFD")
+                .replace(
+                    /[\u0300-\u036f]/g,
+                    ""
+                )
+                .trim();
 
-    const results =
-        document.getElementById("searchResults");
+        }
 
 
-    results.innerHTML = `
 
-        <div class="no-results">
+        /* =========================
+           BUSCAR CANCIÓN
+        ========================= */
 
-            <h3>
-                ¿Qué canción quieres aprender?
-            </h3>
+        function searchSong() {
 
+            const input =
+                document.getElementById(
+                    "songSearch"
+                );
 
-            <input
-                type="text"
-                id="requestTitle"
-                placeholder="Nombre de la canción"
-                style="
-                    width:100%;
-                    margin-top:15px;
-                    padding:12px;
-                    border:1px solid #eadfdb;
-                    border-radius:10px;
-                "
-            >
 
+            const results =
+                document.getElementById(
+                    "searchResults"
+                );
 
-            <input
-                type="text"
-                id="requestArtist"
-                placeholder="Artista"
-                style="
-                    width:100%;
-                    margin-top:10px;
-                    padding:12px;
-                    border:1px solid #eadfdb;
-                    border-radius:10px;
-                "
-            >
 
+            const search =
+                normalizeText(
+                    input.value
+                );
 
-            <textarea
-                id="requestMessage"
-                placeholder="¿Quieres decirle algo a Becky? (opcional)"
-                style="
-                    width:100%;
-                    margin-top:10px;
-                    padding:12px;
-                    border:1px solid #eadfdb;
-                    border-radius:10px;
-                    min-height:90px;
-                    font-family:inherit;
-                "
-            ></textarea>
 
+            if (!search) {
 
-            <button
-                onclick="sendRequest()"
-            >
-                Enviar solicitud
-            </button>
+                results.innerHTML = "";
 
-        </div>
+                return;
 
-    `;
+            }
 
-}
 
+            const matches =
+                songs.filter(song => {
 
+                    const title =
+                        normalizeText(
+                            song.title
+                        );
 
-/* =========================
-   ENVIAR SOLICITUD
-========================= */
 
-async function sendRequest() {
+                    const artist =
+                        normalizeText(
+                            song.artist
+                        );
 
 
-    const title =
+                    return (
+                        title.includes(search) ||
+                        artist.includes(search)
+                    );
+
+                });
+
+
+            if (
+                matches.length === 0
+            ) {
+
+                results.innerHTML = `
+
+                    <div class="no-results">
+
+                        <h3>
+                            No encontramos esa canción. 🎸
+                        </h3>
+
+                        <p>
+                            Todavía no la tenemos,
+                            pero puedes solicitarla.
+                        </p>
+
+                        <button
+                            onclick="requestSong()"
+                        >
+                            Solicitar canción
+                        </button>
+
+                    </div>
+
+                `;
+
+                return;
+
+            }
+
+
+            results.innerHTML =
+                matches.map(song => `
+
+                    <div class="song-result">
+
+                        <div>
+
+                            <h3>
+                                ${song.title}
+                            </h3>
+
+                            <p>
+                                ${song.artist}
+                            </p>
+
+                            <span class="song-level">
+                                ${song.level}
+                            </span>
+
+                        </div>
+
+
+                        <button
+                            onclick="openSong('${escapeText(song.title)}')"
+                        >
+                            Ver canción
+                        </button>
+
+                    </div>
+
+                `).join("");
+
+        }
+
+
+
+        /* =========================
+           ENTER PARA BUSCAR
+        ========================= */
+
         document
-            .getElementById("requestTitle")
-            .value
-            .trim();
+            .getElementById("songSearch")
+            .addEventListener(
+                "keydown",
+                function(event) {
+
+                    if (
+                        event.key === "Enter"
+                    ) {
+
+                        event.preventDefault();
+
+                        searchSong();
+
+                    }
+
+                }
+            );
 
 
-    const artist =
-        document
-            .getElementById("requestArtist")
-            .value
-            .trim();
+
+        /* =========================
+           ESCAPAR TEXTO
+        ========================= */
+
+        function escapeText(text) {
+
+            return text
+                .replace(
+                    /\\/g,
+                    "\\\\"
+                )
+                .replace(
+                    /'/g,
+                    "\\'"
+                );
+
+        }
 
 
-    const message =
-        document
-            .getElementById("requestMessage")
-            .value
-            .trim();
+
+        /* =========================
+           ENFOCAR BUSCADOR
+        ========================= */
+
+        function focusSearch() {
+
+            const input =
+                document.getElementById(
+                    "songSearch"
+                );
 
 
-    if (!title || !artist) {
+            window.scrollTo({
 
-        alert(
-            "Escribe el nombre de la canción y el artista."
-        );
+                top:
+                    input.getBoundingClientRect().top +
+                    window.scrollY -
+                    120,
 
-        return;
-
-    }
-
-
-    const { error } =
-        await supabaseClient
-            .from("song_requests")
-            .insert({
-
-                song_title: title,
-
-                artist: artist,
-
-                message: message
+                behavior: "smooth"
 
             });
 
 
-    if (error) {
+            setTimeout(
+                () => input.focus(),
+                400
+            );
 
-        console.error(error);
+        }
 
-        alert(
-            "No pudimos enviar la solicitud. Inténtalo otra vez."
-        );
 
-        return;
 
-    }
+        /* =========================
+           ABRIR CANCIÓN
+        ========================= */
 
+        function openSong(title) {
 
-    document
-        .getElementById("searchResults")
-        .innerHTML = `
+            const results =
+                document.getElementById(
+                    "searchResults"
+                );
 
-            <div class="no-results">
 
-                <h3>
-                    ¡Solicitud enviada! 🎸
-                </h3>
+            results.innerHTML = `
 
-                <p>
-                    Becky ya recibió tu petición.
-                </p>
+                <div class="no-results">
 
-            </div>
+                    <h3>
+                        ${title}
+                    </h3>
 
-        `;
+                    <p>
+                        Aquí irá la página completa
+                        de esta canción.
+                    </p>
 
+                    <p>
+                        Acordes · Rasgueo · Requinto ·
+                        Nivel · Progreso
+                    </p>
 
-    loadRequestedSongs();
+                    <button
+                        onclick="focusSearch()"
+                    >
+                        Buscar otra canción
+                    </button>
 
-}
+                </div>
 
+            `;
 
+        }
 
-/* =========================
-   MOSTRAR SOLICITUDES
-========================= */
 
-async function loadRequestedSongs() {
 
+        /* =========================
+           SOLICITAR CANCIÓN
+        ========================= */
 
-    const requestedSongs =
-        document.getElementById("requestedSongs");
+        function requestSong() {
 
+            focusSearch();
 
-    const { data, error } =
-        await supabaseClient
 
-            .from("song_requests")
+            const results =
+                document.getElementById(
+                    "searchResults"
+                );
 
-            .select(
-                "song_title, artist, created_at"
-            )
 
-            .order(
-                "created_at",
-                {
-                    ascending: false
-                }
-            )
+            results.innerHTML = `
 
-            .limit(5);
+                <div class="no-results">
 
+                    <h3>
+                        ¿Qué canción quieres aprender?
+                    </h3>
 
-    if (error) {
+                    <input
+                        id="requestTitle"
+                        type="text"
+                        placeholder="Nombre de la canción"
+                        style="
+                            width:100%;
+                            margin-top:15px;
+                            padding:12px;
+                            border:1px solid #eadfdb;
+                            border-radius:10px;
+                            outline:none;
+                        "
+                    >
 
-        console.error(error);
+                    <input
+                        id="requestArtist"
+                        type="text"
+                        placeholder="Artista"
+                        style="
+                            width:100%;
+                            margin-top:10px;
+                            padding:12px;
+                            border:1px solid #eadfdb;
+                            border-radius:10px;
+                            outline:none;
+                        "
+                    >
 
+                    <textarea
+                        id="requestMessage"
+                        placeholder="Mensaje opcional"
+                        style="
+                            width:100%;
+                            margin-top:10px;
+                            padding:12px;
+                            border:1px solid #eadfdb;
+                            border-radius:10px;
+                            min-height:90px;
+                            outline:none;
+                            resize:vertical;
+                        "
+                    ></textarea>
 
-        requestedSongs.innerHTML = `
+                    <button
+                        onclick="sendRequest()"
+                    >
+                        Enviar solicitud
+                    </button>
 
-            <div class="vote-row">
+                </div>
 
-                <span>
-                    No pudimos cargar las solicitudes.
-                </span>
+            `;
 
-                <span class="vote-number">
-                    —
-                </span>
 
-            </div>
+            setTimeout(
+                () =>
+                    document
+                        .getElementById(
+                            "requestTitle"
+                        )
+                        .focus(),
+                100
+            );
 
-        `;
+        }
 
 
-        return;
 
-    }
+        /* =========================
+           ENVIAR SOLICITUD
+        ========================= */
 
+        async function sendRequest() {
 
-    if (!data || data.length === 0) {
+            const title =
+                document
+                    .getElementById(
+                        "requestTitle"
+                    )
+                    .value
+                    .trim();
 
 
-        requestedSongs.innerHTML = `
+            const artist =
+                document
+                    .getElementById(
+                        "requestArtist"
+                    )
+                    .value
+                    .trim();
 
-            <div class="vote-row">
 
-                <span>
-                    Aún no hay canciones solicitadas.
-                </span>
+            const message =
+                document
+                    .getElementById(
+                        "requestMessage"
+                    )
+                    .value
+                    .trim();
 
-                <span class="vote-number">
-                    🎸
-                </span>
 
-            </div>
+            if (
+                !title ||
+                !artist
+            ) {
 
-        `;
+                alert(
+                    "Escribe la canción y el artista."
+                );
 
+                return;
 
-        return;
+            }
 
-    }
 
+            if (!supabaseClient) {
 
-    requestedSongs.innerHTML = data.map(song => `
+                alert(
+                    "La página todavía no está conectada a Supabase."
+                );
 
-        <div class="vote-row">
+                return;
 
-            <span>
-                ${song.song_title} — ${song.artist}
-            </span>
+            }
 
-            <span class="vote-number">
-                🎸
-            </span>
 
-        </div>
+            const { error } =
+                await supabaseClient
+                    .from(
+                        "song_requests"
+                    )
+                    .insert({
 
-    `).join("");
+                        song_title:
+                            title,
 
-}
+                        artist:
+                            artist,
 
+                        message:
+                            message
 
+                    });
 
-/* =========================
-   CARGAR SOLICITUDES AL ABRIR
-========================= */
 
-loadRequestedSongs();
+            if (error) {
 
+                console.error(
+                    error
+                );
 
-</script>
+                alert(
+                    "No pudimos enviar la solicitud."
+                );
 
+                return;
+
+            }
+
+
+            document
+                .getElementById(
+                    "searchResults"
+                )
+                .innerHTML = `
+
+                    <div class="no-results">
+
+                        <h3>
+                            ¡Solicitud enviada! 🎸
+                        </h3>
+
+                        <p>
+                            Becky ya recibió tu petición.
+                        </p>
+
+                    </div>
+
+                `;
+
+
+            loadRequestedSongs();
+
+        }
+
+
+
+        /* =========================
+           CARGAR SOLICITUDES
+        ========================= */
+
+        async function loadRequestedSongs() {
+
+            const container =
+                document.getElementById(
+                    "requestedSongs"
+                );
+
+
+            if (!supabaseClient) {
+
+                container.innerHTML = `
+
+                    <div class="vote-row">
+
+                        <span>
+                            Las solicitudes aparecerán
+                            cuando conectemos la academia.
+                        </span>
+
+                        <span class="vote-number">
+                            🎸
+                        </span>
+
+                    </div>
+
+                `;
+
+                return;
+
+            }
+
+
+            const {
+                data,
+                error
+            } =
+                await supabaseClient
+                    .from(
+                        "song_requests"
+                    )
+                    .select(
+                        "song_title, artist, created_at"
+                    )
+                    .order(
+                        "created_at",
+                        {
+                            ascending: false
+                        }
+                    )
+                    .limit(5);
+
+
+            if (error) {
+
+                console.error(
+                    error
+                );
+
+                return;
+
+            }
+
+
+            if (
+                !data ||
+                data.length === 0
+            ) {
+
+                container.innerHTML = `
+
+                    <div class="vote-row">
+
+                        <span>
+                            Aún no hay solicitudes.
+                        </span>
+
+                        <span class="vote-number">
+                            🎸
+                        </span>
+
+                    </div>
+
+                `;
+
+                return;
+
+            }
+
+
+            container.innerHTML =
+                data.map(song => `
+
+                    <div class="vote-row">
+
+                        <span>
+                            ${song.song_title}
+                            —
+                            ${song.artist}
+                        </span>
+
+                        <span class="vote-number">
+                            🎸
+                        </span>
+
+                    </div>
+
+                `).join("");
+
+        }
+
+
+
+        /* =========================
+           MAPA
+        ========================= */
+
+        function openMapNode(node) {
+
+            if (
+                node === "start"
+            ) {
+
+                alert(
+                    "Aquí comienza tu aventura. 🎸"
+                );
+
+                return;
+
+            }
+
+
+            if (
+                node === "lesson"
+            ) {
+
+                alert(
+                    "Lección desbloqueada: Primeros acordes. +100 XP"
+                );
+
+                return;
+
+            }
+
+
+            if (
+                node === "tourism"
+            ) {
+
+                alert(
+                    "Descubriste un lugar especial de Chihuahua. 🗺️"
+                );
+
+                return;
+
+            }
+
+
+            if (
+                node === "locked"
+            ) {
+
+                alert(
+                    "Este lugar todavía está bloqueado. Completa más lecciones."
+                );
+
+                return;
+
+            }
+
+
+            if (
+                node === "final"
+            ) {
+
+                alert(
+                    "Aquí aparecerá un reto especial. 🎸"
+                );
+
+            }
+
+        }
+
+
+
+        /* =========================
+           PERFIL
+        ========================= */
+
+        function openProfile() {
+
+            alert(
+                "Nivel " +
+                player.level +
+                " · " +
+                player.xp +
+                " XP"
+            );
+
+        }
+
+
+
+        /* =========================
+           INICIAR
+        ========================= */
+
+        loadProgress();
+
+        loadRequestedSongs();
+
+
+    </script>
 
 </body>
 
